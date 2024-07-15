@@ -6,19 +6,19 @@ import api from 'api/Requisicoes';
 import { useUser } from 'views/admin/default/Context/UseContext';
 
 function EditarPergunta({ show, onHide }) {
-    const {pergunta, resposta,setPergunta, handleClose, perguntaSelecionada} = useUser();
+    const {setor, handleClose,setPergunta, perguntaSelecionada} = useUser();
     const [novaPergunta, setNovaPergunta] = useState('');
     
 	const enviarNovaPergunta = async () => {
 		try {
-            await api.put('/chats/2/mensagens', {id:perguntaSelecionada.id, texto: novaPergunta})
+            await api.put('/chats/1/mensagens', {id:perguntaSelecionada.id, texto: novaPergunta})
 					.then(response => {
 						setNovaPergunta('')
 					})
 					.catch(error => {
 						console.error('Erro ao enviar pergunta:', error);
 					});
-            const response = await api.get('mensagens');
+            const response = await api.get('mensagens/setores/'+setor);
 			setPergunta(response.data);
 		} catch (error) {
 			console.error(error);
@@ -48,7 +48,7 @@ function EditarPergunta({ show, onHide }) {
                         <Form.Control
                             type="text"
                             id="inputPergunta"
-                            placeholder='Coloque a pergunta aqui'
+                            placeholder='Coloque a pergunta editada aqui'
                             value={novaPergunta}
                             onChange={handlePerguntaChange}
                         />

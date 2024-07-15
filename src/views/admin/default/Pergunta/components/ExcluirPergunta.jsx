@@ -5,15 +5,14 @@ import api from 'api/Requisicoes';
 import { useUser } from 'views/admin/default/Context/UseContext';
 
 function ExcluirPergunta({ show, onHide }) {
-    const {setPergunta, perguntaSelecionada} = useUser();
+    const {setor,setPergunta, perguntaSelecionada} = useUser();
     
 	const ExcluirPerguntaAtual = async () => {
         try {
-            console.log(perguntaSelecionada.id);
             let id = perguntaSelecionada.id;
     
             // Passando o ID no corpo da requisição DELETE
-            await api.delete('/chats/2/mensagens', { data: { id: id } })
+            await api.delete('/chats/1/mensagens', { data: { id: id } })
                 .then(response => {
                 })
                 .catch(error => {
@@ -21,7 +20,7 @@ function ExcluirPergunta({ show, onHide }) {
                 });
     
             // Atualiza as respostas após excluir a pergunta
-            const response = await api.get('/mensagens');
+            const response = await api.get('/mensagens/setores/'+setor);
             setPergunta(response.data);
         } catch (error) {
             console.error(error);
@@ -39,10 +38,14 @@ function ExcluirPergunta({ show, onHide }) {
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Deseja Excluir a pergunta de : {perguntaSelecionada && perguntaSelecionada.id}</Modal.Title>
+                <Modal.Title>Deseja Excluir a pergunta de id : {perguntaSelecionada && perguntaSelecionada.id}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Button variant="secondary" onClick={onHide}>
+            <Modal.Header>
+                    {perguntaSelecionada && perguntaSelecionada.texto}
+                </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center"> 
+                
+                <Button variant="secondary" onClick={onHide} style={{marginRight:10}}>
                     Não
                 </Button>
                 <Button variant="primary" onClick={handleSubmit}>

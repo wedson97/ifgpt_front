@@ -11,8 +11,7 @@ import {
 
 import Respostas from "views/admin/default/Resposta/Respostas";
 import Principal from "views/admin/default";
-import Perguntas from "views/admin/default/Pergunta/Pergunta";
-import Login from "views/admin/default/Login";
+import Pergunta from "views/admin/default/Pergunta/Pergunta";
 import Arquivos from "views/admin/default/Arquivos";
 
 const routes = [
@@ -28,7 +27,7 @@ const routes = [
     layout: "/admin",
     path: "/perguntas",
     icon: <Icon as={MdChat} width='20px' height='20px' color='inherit' />,
-    component: Perguntas,
+    component: Pergunta,
   },
   {
     name: "Respostas",

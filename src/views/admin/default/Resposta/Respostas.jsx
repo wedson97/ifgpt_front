@@ -6,7 +6,7 @@ import { ColunaTabelaResposta } from './variaveis/ColunaTabelaResposta';
 import EditarResposta from './components/EditarResposta';
 import ExcluirResposta from './components/ExcluirResposta';
 export default function Respostas() {
-  const { resposta, setResposta, perguntaSelecionada, respostaSelecionada, setRespostaSelecionada, showEditarResposta, setEditarResposta, handleShowEditarResposta, handleShowExcluirResposta, showExcluirResposta } = useUser();
+  const { resposta, setResposta, perguntaSelecionada, showEditarResposta, handleShowEditarResposta, handleShowExcluirResposta, showExcluirResposta } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ export default function Respostas() {
       }
     };
     fetchData();
-  }, []);
+  }, [perguntaSelecionada.id, setResposta]);
   
   const columns = ColunaTabelaResposta("Opções", ["Editar","Excluir"]);
   const data = resposta;

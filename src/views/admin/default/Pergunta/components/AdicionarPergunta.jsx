@@ -4,21 +4,22 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import api from 'api/Requisicoes';
 import { useUser } from 'views/admin/default/Context/UseContext';
+import SelecionarSetor from './SelecionarSetor';
 
 function AdicionarPergunta({ show, onHide }) {
-    const {setPergunta, handleClose} = useUser();
+    const {setor, handleClose,setPergunta} = useUser();
     const [novaPergunta, setNovaPergunta] = useState('');
     
 	const enviarNovaPergunta = async () => {
 		try {
-            await api.post('/chats/1/mensagens', {texto: novaPergunta})
+            await api.post('/chats/1/mensagens', {texto: novaPergunta, setor_id:setor})
 					.then(response => {
 						setNovaPergunta('')
 					})  
 					.catch(error => {
 						console.error('Erro ao enviar pergunta:', error);
 					});
-            const response = await api.get('mensagens');
+            const response = await api.get('mensagens/setores/'+setor);
 			setPergunta(response.data);
 		} catch (error) {
 			console.error(error);
@@ -51,8 +52,11 @@ function AdicionarPergunta({ show, onHide }) {
                             placeholder='Coloque a pergunta aqui'
                             value={novaPergunta}
                             onChange={handlePerguntaChange}
+                            style={{ marginBottom: '10px', borderColor:'grey' }}
+                            
                         />
                     </>
+                    <SelecionarSetor todos_setores={false}></SelecionarSetor>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>

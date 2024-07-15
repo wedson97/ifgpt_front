@@ -36,6 +36,7 @@ function ResponderModal({ show, onHide, perguntaSelecionada }) {
                             id="inputResposta"
                             value={resposta}
                             onChange={handleRespostaChange}
+                            style={{ marginBottom: '10px', borderColor:'grey' }}
                         />
                     </>
                 )}
